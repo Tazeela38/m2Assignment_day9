@@ -1,0 +1,29 @@
+// server.js
+
+const express = require("express");
+const app = express();
+
+// 1. Middleware: Parse JSON
+app.use(express.json());
+
+// 2. Custom Middleware to log request details
+app.use((req, res, next) => {
+  console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.url}`);
+  next();
+});
+
+// 3. POST route /register
+app.post("/register", (req, res) => {
+  const { name, email, course } = req.body;
+
+  // Log the received data
+  console.log("Received Data:", req.body);
+
+  // Send response
+  res.send(`Registration successful for ${name}`);
+});
+
+// 4. Start server
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});
